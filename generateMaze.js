@@ -17,8 +17,13 @@ class Cell {
         this.exitDown = false;
         this.isVisible = false;
         this.isPit = false;
-        this.isNear = false;
+        this.isWarning = false;
         this.isWumpus = false;
+        this.isPlayer = false;
+    }
+
+    isNeghbor(x, y) {
+        return (this.posX >= x - 1 && this.posX <= x + 1) && (this.posY >= y - 1 && this.posY <= y + 1) ? true : false;
     }
 }
 

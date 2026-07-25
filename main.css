@@ -25,17 +25,21 @@
     background: #ff2255;
 }
 
-.trapped {
+.trap {
     background: #aa55cc;
 }
 
-.fog-of-war {
+.fog {
     background: #555555;
     border-color: none;
 }
 
-.top-door {
-    border-top: 0.5px dashed #555555;
+.wumpus {
+    background-color: coral;
+}
+
+.player {
+    background-color: yellow;
 }
 
 .right-door {

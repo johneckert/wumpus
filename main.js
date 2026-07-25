@@ -10,6 +10,7 @@ const seed = undefined;
 const numTraps = 4;
 const trapLocations = [];
 let wumpus = false;
+let player = false
 
 const cells = generateMaze(width, height, seed);
 
@@ -24,7 +25,25 @@ while (placedTraps < numTraps) {
     }
 }
 
-console.log(trapLocations);
+// place Wumpus
+while (!wumpus) {
+    let wI = Math.floor(Math.random() * cells.length);
+    if (!cells[wI].isPit) {
+        cells[wI].isWumpus = true;
+        const x = cells[wI].posX;
+        const y = cells[wI].posY;
+        cells.map(cell => {
+            if (cell.isNeghbor(x, y)) {
+                cell.isWarning = true;
+            }
+        });
+        wumpus = { x, y, i: wI };
+    }
+}
+
+// place player
+
+// draw gameboard
 const gameBoard = document.getElementById("game-board");
 cells.forEach(cell => {
     const cellDiv = document.createElement('div')
@@ -41,26 +60,27 @@ cells.forEach(cell => {
     if (cell.exitLeft) {
         cellDiv.classList.add('left-door');
     }
+    if (cell.isPit) {
+        cellDiv.classList.add('trap');
+    }
+    if (cell.isWumpus) {
+        cellDiv.classList.add('wumpus');
+    }
+    if (cell.isPlayer) {
+        cellDiv.classList.add('isPlayer');
+    }
+    if (cell.isWarning) {
+        cellDiv.classList.add('warning');
+    }
+
+
+
+
+
     cellDiv.style = `grid-column-start: ${cell.posX}; grid-column-end: ${cell.posX + 1}; grid-row-start: ${cell.posY}; grid-row-end: ${cell.posY + 1};`
     cellDiv.innerText = `${cell.posX}, ${cell.posY}`;
     gameBoard.appendChild(cellDiv)
 })
-
-
-// place Wumpus
-// while (!wumpus) {
-//     let wI = Math.floor(Math.random() * cells.length);
-//     if (!cells[wI].isPit) {
-//         cells[wI].isWumpus = true;
-//         const x = cells[wI].posX;
-//         const y = cells[wI].posY;
-//         cells.map(cell => {
-//             if ((cell.posX >= x - 1 && cell.posX <= x + 1) && (cell.posY >= y - 1 && cell.posY <= y + 1)) {
-//                 cell.isNear = true;
-//             }
-//         });
-//     }
-// }
 
 
 console.log(cells);
