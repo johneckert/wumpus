@@ -10,6 +10,10 @@
     grid-template-rows: repeat(10, 10vw, [divider]);;
 }
 
+#game-board > .arrow-mode.cell {
+    border-color: #aa9900;
+}
+
 .cell {
     position: relative;
     /* border-color: #000000; */
@@ -39,7 +43,10 @@
 }
 
 .player {
-    background-color: yellow;
+    background-color: #00aa77;
+}
+.top-door {
+    border-top: 0.5px dashed #555555;
 }
 
 .right-door {
