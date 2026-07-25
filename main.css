@@ -1,0 +1,51 @@
+#game-board {
+    position: absolute;
+    width: 100vh;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    background: #555555;
+    display: grid;
+    grid-template-columns: repeat(10, 10vw, [divider]);
+    grid-template-rows: repeat(10, 10vw, [divider]);;
+}
+
+.cell {
+    position: relative;
+    /* border-color: #000000; */
+    border: 5px solid #000000;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 5%;
+}
+
+.warning {
+    background: #ff2255;
+}
+
+.trapped {
+    background: #aa55cc;
+}
+
+.fog-of-war {
+    background: #555555;
+    border-color: none;
+}
+
+.top-door {
+    border-top: 0.5px dashed #555555;
+}
+
+.right-door {
+    border-right: 0.5px dashed #555555;
+}
+
+.bottom-door {
+    border-bottom: 0.5px dashed #555555;
+}
+
+.left-door {
+    border-left: 0.5px dashed #555555;
+}
