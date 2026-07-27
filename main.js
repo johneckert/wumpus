@@ -1,3 +1,5 @@
+let gameOver = true;
+let win = false;
 const width = 10;
 const height = width;
 const seed = undefined;
@@ -41,10 +43,26 @@ function createGame() {
         let pI = Math.floor(Math.random() * cells.length);
         if (!cells[pI].isPit && !cells[pI].isWarning && !cells[pI].isWumpus) {
             cells[pI].isPlayer = true;
+            cells[pI].visited();
             player = { x: cells[pI].posX, y: cells[pI].posY, i: pI };
         }
     }
+    gameOver = false;
     return { cells, trapLocations, player, wumpus };
+}
+
+function findOut(cell, showAlert) {
+    console.log('2', showAlert);
+    if (cell.isPit) {
+        gameOver = true;
+        alert("You fell in a pit and died!");
+    } else if (cell.isWumpus) {
+        gameOver = true;
+        alert("You stumble upon the Wumpus. It eats you. You died!");
+    } else if (cell.isWarning && showAlert) {
+        alert("You can hear breathing neaerby, the Wumpus is close!");
+    }
+
 }
 
 function updatePlayerLocation(newCell, oldCell) {
@@ -53,46 +71,57 @@ function updatePlayerLocation(newCell, oldCell) {
     player.x = newCell.posX;
     player.y = newCell.posY;
     player.i = cells.indexOf(newCell);
+    console.log('!!', cells[player.i]);
+    cells[player.i].visited();
     drawGameboard();
 }
 
 function movePlayer(key) {
-    const currentCell = cells[player.i]
+    const prevCell = cells[player.i]
     console.log(player);
-    console.log(currentCell);
+    console.log(prevCell);
     switch (key) {
         case "ArrowUp":
             console.log('U');
-            if (currentCell.exitTop) {
+            if (prevCell.exitTop) {
                 const newCell = cells.filter((cell) => cell.posX === player.x && cell.posY === player.y - 1)[0];
-                updatePlayerLocation(newCell, currentCell);
+                const showAlert = newCell.hidden;
+                console.log('1', showAlert);
+                updatePlayerLocation(newCell, prevCell);
+                findOut(newCell, showAlert);
             } else {
                 console.log("Bonk!");
             }
             break;
         case "ArrowRight":
             console.log('R');
-            if (currentCell.exitRight) {
+            if (prevCell.exitRight) {
                 const newCell = cells.filter((cell) => cell.posX === player.x + 1 && cell.posY === player.y)[0];
-                updatePlayerLocation(newCell, currentCell);
+                const showAlert = newCell.hidden;
+                updatePlayerLocation(newCell, prevCell);
+                findOut(newCell);
             } else {
                 console.log("Bonk!");
             }
             break;
         case "ArrowDown":
             console.log('D');
-            if (currentCell.exitBottom) {
+            if (prevCell.exitDown) {
                 const newCell = cells.filter((cell) => cell.posX === player.x && cell.posY === player.y + 1)[0];
-                updatePlayerLocation(newCell, currentCell);
+                const showAlert = newCell.hidden;
+                updatePlayerLocation(newCell, prevCell);
+                findOut(newCell);
             } else {
                 console.log("Bonk!");
             }
             break;
         case "ArrowLeft":
             console.log('L');
-            if (currentCell.exitLeft) {
+            if (prevCell.exitLeft) {
                 const newCell = cells.filter((cell) => cell.posX === player.x - 1 && cell.posY === player.y)[0];
-                updatePlayerLocation(newCell, currentCell);
+                const showAlert = newCell.hidden;
+                updatePlayerLocation(newCell, prevCell);
+                findOut(newCell);
             } else {
                 console.log("Bonk!");
             }
@@ -104,15 +133,59 @@ function fireArrow(key) {
     switch (key) {
         case "ArrowUp":
             console.log('Arrow U');
+            if (cells[player.i].exitTop) {
+                if (player.y - 1 === wumpus.y && player.x === wumpus.x) {
+                    cells[wumpus.i].visited();
+                    drawGameboard();
+                    alert("You killed the Wumpus. Good Job!")
+                    win = true;
+                } else {
+                    alert("You missed! The Wumpus jumps out and eats you. You died!");
+                }
+                gameOver = true;
+            }
             break;
         case "ArrowRight":
             console.log('Arrow R');
+            if (cells[player.i].exitRight) {
+                if (player.x + 1 === wumpus.x && player.y === wumpus.y) {
+                    cells[wumpus.i].visited();
+                    drawGameboard();
+                    alert("You killed the Wumpus. Good Job!")
+                    win = true;
+                } else {
+                    alert("You missed! The Wumpus jumps out and eats you. You died!");
+                }
+                gameOver = true;
+            }
             break;
         case "ArrowDown":
             console.log('Arrow D');
+            if (cells[player.i].exitDown) {
+                if (player.y + 1 === wumpus.y && player.x === wumpus.x) {
+                    cells[wumpus.i].visited();
+                    drawGameboard();
+                    alert("You killed the Wumpus. Good Job!")
+                    win = true;
+                } else {
+                    alert("You missed! The Wumpus jumps out and eats you. You died!");
+                }
+                gameOver = true;
+            }
             break;
         case "ArrowLeft":
             console.log('Arrow L');
+            if (cells[player.i].exitLeft) {
+                if (player.x - 1 === wumpus.x && player.y === wumpus.y) {
+                    cells[wumpus.i].visited();
+                    drawGameboard();
+                    alert("You killed the Wumpus. Good Job!")
+                    win = true;
+                } else {
+                    alert("You missed! The Wumpus jumps out and eats you. You died!");
+                }
+                gameOver = true;
+            }
             break;
     }
 };
@@ -126,39 +199,40 @@ function drawGameboard () {
     cells.forEach(cell => {
         const cellDiv = document.createElement('div')
         cellDiv.classList.add('cell');
-        if (arrowMode) {
-            cellDiv.classList.add('arrow-mode');
-        }
-        if (cell.exitTop) {
-            cellDiv.classList.add('top-door');
-        }
-        if (cell.exitRight) {
-            cellDiv.classList.add('right-door');
-        }
-        if (cell.exitDown) {
-            cellDiv.classList.add('bottom-door');
-        }
-        if (cell.exitLeft) {
-            cellDiv.classList.add('left-door');
-        }
-        if (cell.isPit) {
-            cellDiv.classList.add('trap');
-        }
-        if (cell.isWumpus) {
-            cellDiv.classList.add('wumpus');
-        }
-        if (cell.isPlayer) {
-            cellDiv.classList.add('isPlayer');
-        }
-        if (cell.isWarning) {
-            cellDiv.classList.add('warning');
-        }
         if (cell.isPlayer) {
             cellDiv.classList.add('player');
         }
-
+        if (cell.hidden) {
+            cellDiv.classList.add('fog');
+        } else {
+            cellDiv.classList.remove('fog');
+            if (arrowMode) {
+                cellDiv.classList.add('arrow-mode');
+            }
+            if (cell.exitTop) {
+                cellDiv.classList.add('top-door');
+            }
+            if (cell.exitRight) {
+                cellDiv.classList.add('right-door');
+            }
+            if (cell.exitDown) {
+                cellDiv.classList.add('bottom-door');
+            }
+            if (cell.exitLeft) {
+                cellDiv.classList.add('left-door');
+            }
+            if (cell.isPit) {
+                cellDiv.classList.add('trap');
+            }
+            if (cell.isWumpus) {
+                cellDiv.classList.add('wumpus');
+            }
+            if (cell.isWarning) {
+                cellDiv.classList.add('warning');
+            }
+        }
+        // console.log(cellDiv.classList)
         cellDiv.style = `grid-column-start: ${cell.posX}; grid-column-end: ${cell.posX + 1}; grid-row-start: ${cell.posY}; grid-row-end: ${cell.posY + 1};`
-        cellDiv.innerText = `${cell.posX}, ${cell.posY}`;
         gameBoard.appendChild(cellDiv)
     })
 };
@@ -167,6 +241,7 @@ drawGameboard();
 
 // event listeners
 document.addEventListener("keyup", ({ key }) => {
+    if (gameOver) return;
     if (key === 'a') {
         arrowMode = !arrowMode;
         drawGameboard();

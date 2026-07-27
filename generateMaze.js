@@ -20,10 +20,15 @@ class Cell {
         this.isWarning = false;
         this.isWumpus = false;
         this.isPlayer = false;
+        this.hidden = true;
     }
 
     isNeghbor(x, y) {
         return (this.posX >= x - 1 && this.posX <= x + 1) && (this.posY >= y - 1 && this.posY <= y + 1) ? true : false;
+    }
+
+    visited() {
+        this.hidden = false;
     }
 }
 
