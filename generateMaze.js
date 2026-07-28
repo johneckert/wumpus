@@ -1,10 +1,7 @@
 // --------------------------------------------------------------------
 // Cell class
-// --------------------------------------------------------------------
-// Represents a single cell in the maze grid. exitTop/Left/Right/Down
-// are true when that side of the cell is open (a passage), false when
-// it's a wall. posX/posY give the cell's location, with (0,0) at the
-// upper-left corner of the grid.
+//
+// Represents a single cell in the maze grid. 
 // --------------------------------------------------------------------
 
 class Cell {
@@ -20,7 +17,7 @@ class Cell {
         this.isWarning = false;
         this.isWumpus = false;
         this.isPlayer = false;
-        this.hidden = true;
+        this.suppressAlert = true;
     }
 
     isNeghbor(x, y) {
@@ -28,7 +25,7 @@ class Cell {
     }
 
     visited() {
-        this.hidden = false;
+        this.suppressAlert = false;
     }
 }
 
