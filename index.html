@@ -3,26 +3,36 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.1.2/svg.min.js"></script>
+    <script src="https://kit.fontawesome.com/940f4d9432.js" crossorigin="anonymous"></script>
     <link type="text/css" href="main.css" rel="stylesheet" />
     <title>Hunt the Wumpus</title>
 </head>
 
 <body>
-    <section id="game-board"></section>
-    <section id="rules">
-        <h1>Hunt the Wumpus</h1>
-        <p>You must find and defeat the Wumpus before it eats you!</p>
-        <ul>
-            <li>Use the arrow keys to explore the maze.</li>
-            <li>If you hear the wumpus press A to draw an arrow.</li>
-            <li>Use the arrow keys to shoot the adjacent square.</li>
-            <li>Be careful! You only get one shot, if you target the wrong square the Wumpus will eat you.</li>
-        </ul>
-        <button id="new-game-button" type="button">New Game</button>
+        <section id="game-board"></section>
+        <section id="rules">
+            <h1>Hunt the Wumpus</h1>
+            <p>You must find and defeat the Wumpus before it eats you!</p>
+            <h2>How to play</h2>
+            <ul>
+                <li>Move around the maze hunting the wumpus.</li>
+                <li>If you fall in a pit, you die.</li>
+                <li>If you enter the wumpus's space, you die.</li>
+                <li>If you fire your arrow and miss, you die!</li>
+                <li>Spaces adjacent to the wumpus are colored red.</li>
+                <li>When you know the wumpus's location, switch to arrow mode and fire an arrow from an adjoining space.</li>
+            </ul>
+            <h2>Controls</h2>
+            <ul>
+                <li><i class="fa-solid fa-circle-arrow-down"></i><span>Move up / Fire arrow up</span></li>
+                <li><i class="fa-solid fa-circle-arrow-up"></i><span>Move down / Fire arrow down</span></li>
+                <li><i class="fa-solid fa-circle-arrow-left"></i><span>Move left / Fire arrow left</span></li>
+                <li><i class="fa-solid fa-circle-arrow-right"></i><span>Move right / Fire arrow right</span></li>
+                <li><i class="fa-solid fa-a"></i><span>Toggle arrow mode</span></li>
+            </ul>
+            <button id="new-game-button" type="button">New Game</button>
 
-    </section>
+        </section>
     <script src="generateMaze.js"></script>
     <script src="main.js"></script>
 </body>
