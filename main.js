@@ -52,7 +52,6 @@ function createGame() {
 }
 
 function findOut(cell, showAlert) {
-    console.log('2', showAlert);
     if (cell.isPit) {
         gameOver = true;
         alert("You fell in a pit and died!");
@@ -71,22 +70,18 @@ function updatePlayerLocation(newCell, oldCell) {
     player.x = newCell.posX;
     player.y = newCell.posY;
     player.i = cells.indexOf(newCell);
-    console.log('!!', cells[player.i]);
     cells[player.i].visited();
     drawGameboard();
 }
 
 function movePlayer(key) {
     const prevCell = cells[player.i]
-    console.log(player);
-    console.log(prevCell);
     switch (key) {
         case "ArrowUp":
             console.log('U');
             if (prevCell.exitTop) {
                 const newCell = cells.filter((cell) => cell.posX === player.x && cell.posY === player.y - 1)[0];
                 const showAlert = newCell.hidden;
-                console.log('1', showAlert);
                 updatePlayerLocation(newCell, prevCell);
                 findOut(newCell, showAlert);
             } else {
@@ -231,7 +226,7 @@ function drawGameboard () {
                 cellDiv.classList.add('warning');
             }
         }
-        // console.log(cellDiv.classList)
+        console.log(cellDiv.classList)
         cellDiv.style = `grid-column-start: ${cell.posX}; grid-column-end: ${cell.posX + 1}; grid-row-start: ${cell.posY}; grid-row-end: ${cell.posY + 1};`
         gameBoard.appendChild(cellDiv)
     })

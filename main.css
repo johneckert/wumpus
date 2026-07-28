@@ -4,7 +4,9 @@
     height: 100vh;
     left: 0;
     top: 0;
-    background: #555555;
+    background: url("images/floorA.jpg");
+    background-size: 30%;
+    background-repeat: repeat;
     display: grid;
     grid-template-columns: repeat(10, 10vw, [divider]);
     grid-template-rows: repeat(10, 10vw, [divider]);;
@@ -16,21 +18,29 @@
 
 .cell {
     position: relative;
-    /* border-color: #000000; */
-    border: 5px solid #000000;
-    background: #ffffff;
+    border: 5px solid transparent;
+    border-image-source: url("images/walls.png");
+    border-image-repeat: stretch;
+    border-image-slice: 30;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    border-radius: 5%;
 }
 
 .warning {
-    background: #ff2255;
+    background: url("/images/velociraptor-tracks.png");
+    background-size: cover;
 }
 
-.trap {
-    background: #aa55cc;
+#game-board > .trap.cell {
+    background: url("./images/pit.png");
+        background-size: 300%;
+        background-position: center;
+}
+
+#game-board > .aiming.cell {
+    background: url("./images/arrow.png");
+    background-size: cover;
 }
 
 .fog {
@@ -39,12 +49,15 @@
 }
 
 .wumpus {
-    background-color: coral;
+    background: url("./images/wumpus.png");
+    background-size: cover;
 }
 
 .player {
-    background-color: #00aa77;
+    background: url("./images/ranger.png");
+    background-size: cover;
 }
+
 .top-door {
     border-top: 0.5px dashed #555555;
 }
