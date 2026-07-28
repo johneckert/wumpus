@@ -10,7 +10,19 @@
 </head>
 
 <body>
-    <div id="game-board"></div>
+    <section id="game-board"></section>
+    <section id="rules">
+        <h1>Hunt the Wumpus</h1>
+        <p>You must find and defeat the Wumpus before it eats you!</p>
+        <ul>
+            <li>Use the arrow keys to explore the maze.</li>
+            <li>If you hear the wumpus press A to draw an arrow.</li>
+            <li>Use the arrow keys to shoot the adjacent square.</li>
+            <li>Be careful! You only get one shot, if you target the wrong square the Wumpus will eat you.</li>
+        </ul>
+        <button id="new-game-button" type="button">New Game</button>
+
+    </section>
     <script src="generateMaze.js"></script>
     <script src="main.js"></script>
 </body>

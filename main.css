@@ -1,5 +1,14 @@
+body {
+    display: flex;
+    margin: 0;
+}
+
+#rules {
+    padding: 2rem;
+}
+
 #game-board {
-    position: absolute;
+    /* position: absolute; */
     width: 100vh;
     height: 100vh;
     left: 0;

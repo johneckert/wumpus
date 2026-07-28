@@ -234,8 +234,12 @@ function drawGameboard () {
 
 drawGameboard();
 
-// event listeners
-document.addEventListener("keyup", ({ key }) => {
+// event handlers
+const handleNewGameClick = (e) => {
+    location.reload();
+}
+
+const handleKeyPress = ({ key }) => {
     if (gameOver) return;
     if (key === 'a') {
         arrowMode = !arrowMode;
@@ -248,5 +252,13 @@ document.addEventListener("keyup", ({ key }) => {
             movePlayer(key)
         }
     }
-})
+}
+
+
+
+// event listeners
+document.addEventListener("keyup", handleKeyPress)
+
+const newGameButton = document.getElementById("new-game-button");
+newGameButton.addEventListener("click", handleNewGameClick);
 
