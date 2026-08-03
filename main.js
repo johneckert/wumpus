@@ -231,6 +231,12 @@ function drawGameboard () {
         }
         if (gameOver) {
             cellDiv.classList.remove('fog');
+            if (cell.isPlayer) {
+                const deadPlayer = document.createElement('div')
+                deadPlayer.classList.add('dead')
+                deadPlayer.classList.add('player');
+                cellDiv.appendChild(deadPlayer)
+            }
         }
         cellDiv.style = `grid-column-start: ${cell.posX + 1}; grid-column-end: ${cell.posX + 2}; grid-row-start: ${cell.posY + 1}; grid-row-end: ${cell.posY + 2};`
         gameBoard.appendChild(cellDiv)
